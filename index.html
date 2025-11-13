@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Space Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100vw;
+    }
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      position: relative;
+      font-family: 'Arial', 'Orbitron', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .stars {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .blackhole-bg {
+      position: fixed;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      width: 380px;
+      height: 380px;
+      z-index: 1;
+      opacity: 0.70;
+      pointer-events: none;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      background: rgba(30,30,60,0.83);
+      backdrop-filter: blur(2px);
+      border-radius: 18px;
+      box-shadow: 0 0 32px #11123b55;
+      width: 95vw;
+      max-width: 440px;
+      padding: 30px 18px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8vw 2vw 8vw 2vw;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      letter-spacing: 2px;
+      font-size: 2.1em;
+      text-shadow: 0 0 20px #00c3ff, 0 0 38px #212c7a;
+      margin: 0 0 10px 0;
+    }
+    .tagline {
+      text-align: center;
+      font-size: 1.19em;
+      color: #ffe066;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 12px #ffe066;
+    }
+    .desc {
+      max-width: 98vw;
+      text-align: center;
+      font-size: 1em;
+      color: #c0ecff;
+      line-height: 1.5;
+      background: rgba(24,28,65,0.57);
+      padding: 13px 5px;
+      border-radius: 13px;
+      margin-bottom: 16px;
+    }
+    .fun-fact {
+      text-align: center;
+      font-size: 1em;
+      color: #8fbbff;
+      font-style: italic;
+      margin-bottom: 24px;
+      min-height: 25px;
+      animation: blink 2s linear infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0.55; }
+    }
+    .enter-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 16px 50px;
+      font-size: 1.17em;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(90deg,#00c3ff 0%,#212c7a 100%);
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 20px #00c3ff57;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .enter-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 40px #00c3ff85;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      width: 2px;
+      height: 2px;
+      animation: twinkle infinite linear;
+    }
+    @media(max-width: 600px) {
+      .container { padding: 14px 2vw 12px 2vw; max-width: 99vw; }
+      h1 { font-size: 1.09em; }
+      .tagline, .desc, .fun-fact { font-size: 0.97em; }
+      .enter-btn { font-size: 0.98em; padding: 10px 19vw; }
+      .blackhole-bg { width: 54vw; height: 54vw; min-width:140px; min-height:140px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <!-- Rotating SVG black hole background -->
+  <div class="blackhole-bg">
+    <svg viewBox="0 0 380 380">
+      <g>
+        <!-- Blackhole shadow -->
+        <ellipse cx="190" cy="190" rx="64" ry="64" fill="#18181f"/>
+        <!-- Accretion disk group (rotates) -->
+        <g id="disk">
+          <ellipse cx="190" cy="190" rx="112" ry="26" fill="none" stroke="#ffc776" stroke-width="12" stroke-opacity="0.40"/>
+          <ellipse cx="190" cy="190" rx="94" ry="16" fill="none" stroke="#fff9ea" stroke-width="7" stroke-opacity="0.26"/>
+          <ellipse cx="190" cy="190" rx="82" ry="34" fill="none" stroke="#9efcff" stroke-width="10" stroke-opacity="0.20"/>
+        </g>
+        <!-- Inner glow -->
+        <ellipse cx="190" cy="190" rx="36" ry="36" fill="#2192f8" fill-opacity="0.04"/>
+      </g>
+      <!-- Center -->
+      <circle cx="190" cy="190" r="17" fill="#18181f"/>
+      <circle cx="190" cy="190" r="6" fill="#88eafd" fill-opacity="0.22"/>
+    </svg>
+  </div>
+  <div class="container">
+    <h1>Welcome to Space Explorer</h1>
+    <div class="tagline">Begin your cosmic adventure!</div>
+    <div class="desc">
+      Explore our solar system, journey through dazzling galaxies, unravel mysteries of black holes, and discover fascinating facts about the universe.<br>
+      Are you ready for liftoff? Your space journey awaits!
+    </div>
+    <div class="fun-fact" id="fun-fact"></div>
+    <button class="enter-btn" onclick="window.location.href='main.html'">Enter</button>
+  </div>
+  <script>
+    // Responsive star background
+    function createStars() {
+      const starsContainer = document.querySelector('.stars');
+      starsContainer.innerHTML = '';
+      let starCount = window.innerWidth < 600 ? 70 : 130;
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = Math.random() * window.innerHeight + 'px';
+        star.style.left = Math.random() * window.innerWidth + 'px';
+        star.style.opacity = Math.random();
+        star.style.animationDuration = (Math.random() + 0.5) + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+    window.addEventListener('resize', createStars);
+    createStars();
+
+    // Animate black hole disk (SVG)
+    const disk = document.getElementById('disk');
+    let angle = 0;
+    function rotateDisk() {
+      angle += 1.2;
+      if (disk) disk.setAttribute('transform', `rotate(${angle} 190 190)`);
+      requestAnimationFrame(rotateDisk);
+    }
+    rotateDisk();
+
+    // Fun fact rotator
+    const facts = [
+      "Did you know? There are more stars in the universe than grains of sand on Earth!",
+      "Saturn could float in water—it's less dense than water!",
+      "A day on Venus is longer than its year.",
+      "Neutron stars can spin up to 600 times per second.",
+      "Black holes aren't actually holes—they're packed with mass!",
+      "Our solar system is about 4.6 billion years old."
+    ];
+    let idx = 0;
+    function showFact() {
+      document.getElementById('fun-fact').textContent = facts[idx];
+      idx = (idx + 1) % facts.length;
+    }
+    showFact();
+    setInterval(showFact, 4200);
+  </script>
+</body>
+</html>
